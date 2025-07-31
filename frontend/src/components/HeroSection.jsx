@@ -12,7 +12,7 @@ const HeroSection = () => {
           </div>
           <div className="combined_boxes">
             <div className="imageBox">
-              <img src="./hero1.png" alt="hero" />
+              <img src="hero11.png" alt="hero" />
             </div>
             <div className="textAndLogo">
               <div className="textWithSvg">

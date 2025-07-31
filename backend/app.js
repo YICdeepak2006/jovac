@@ -1,31 +1,30 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import { errorMiddleware } from "./middlewares/error.js";
-import reservationRouter from "./routes/reservationRoute.js";
-import { dbConnection } from "./database/dbConnection.js";
+    import express from "express";
+    import cors from "cors";
+    import cookieParser from "cookie-parser";
+    import fileUpload from "express-fileupload";
+    import { errorMiddleware } from "./middlewares/error.js";
+    import reservationRouter from "./routes/reservationRoute.js"; 
 
-const app = express();
-dotenv.config({ path: "./config.env" });
+    const app = express();
 
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL],
-    methods: ["POST"],
-    credentials: true,
-  })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    app.use(cors({
+      origin: process.env.FRONTEND_URL, 
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }));
 
-app.use("/api/v1/reservation", reservationRouter);
-app.get("/", (req, res, next)=>{return res.status(200).json({
-  success: true,
-  message: "HELLO WORLD AGAIN"
-})})
+    app.use(cookieParser());
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-dbConnection();
+    app.use(fileUpload({
+      useTempFiles: true,
+      tempFileDir: "/tmp/",
+    }));
 
-app.use(errorMiddleware);
+    app.use("/api/v1/reservation", reservationRouter);
 
-export default app;
+    app.use(errorMiddleware);
+
+    export default app;

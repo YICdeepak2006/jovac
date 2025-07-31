@@ -7,13 +7,13 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="logo">ZEESH</div>
+        <div className="logo">BE Resturant & Cafe</div>
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           <div className="links">
             {data[0].navbarLinks.map((element) => (
               <Link
                 to={element.link}
-                spy={true}
+                spy={true} 
                 smooth={true}
                 duration={500}
                 key={element.id}
